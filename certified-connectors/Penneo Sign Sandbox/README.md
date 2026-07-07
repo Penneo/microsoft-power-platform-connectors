@@ -14,6 +14,12 @@ Creates a new case file in Penneo with the specified documents and signers. The 
 ### Check job status
 Retrieves the current status of a casefile by providing the job UUID and payloadHash. This endpoint is used to poll for job completion status after submitting a case file creation request. The endpoint is rate-limited to 20 requests per minute per uuid-payloadHash combination.
 
+### Get case file details
+Retrieves the details of a specific case file from the Penneo secure archive, including its signers, documents, signature lines, and current status.
+
+### Download document
+Downloads the content of a document from the Penneo secure archive as a base64 encoded string. The document is always returned decrypted. By default, the signed version of the document is returned; use the `signed` parameter to get the unsigned version instead.
+
 ## Obtaining Credentials
 
 The connector has been configured to use OAuth with Authorization Code Grant. Users will have to login with their regular credentials when they use the connector.
@@ -44,6 +50,16 @@ The connector has been configured to use OAuth with Authorization Code Grant. Us
     - Respect the rate limit of 20 requests per minute per uuid-hash combination
 
 Note: You can check what each field does by checking https://penneo.readme.io/reference/createcasefile.
+
+### Retrieving a Case File and its Documents
+
+1. **Get the case file details**:
+    - Use the "Get case file details" action with the case file id
+    - The response includes the case file status, signers, and the list of documents (with their document ids)
+
+2. **Download a document**:
+    - Use the "Download document" action with the document id obtained from the case file details
+    - The response contains the document content as a base64 encoded string, which you can decode to retrieve the PDF file
 
 ## Known Issues and Limitations
 
